@@ -1,0 +1,156 @@
+1. revisiting the select query 1
+select * from CITY where COUNTRYCODE = 'USA' and POPULATION > 100000;
+
+2.  revisiting the select query 1
+SELECT NAME FROM CITY WHERE POPULATION > 120000 AND COUNTRYCODE = 'USA';
+
+3.select all
+select * from CITY;
+
+4.select by id
+SELECT * FROM CITY WHERE ID = 1661;
+
+5. Japanese Cities' Attributes
+SELECT * FROM CITY WHERE COUNTRYCODE = 'JPN';
+
+6.Japanese Cities' Names
+SELECT NAME FROM CITY WHERE COUNTRYCODE ='JPN';
+
+7.Weather Observation Station 1
+SELECT CITY,STATE FROM STATION;
+
+8.Weather Observation Station 3
+SELECT distinct CITY FROM STATION WHERE mod(id,2) = 0;
+
+9.Weather Observation Station 4
+select count(city)- count(distinct city) result from station;
+
+10.higher than 75 marks
+select name from students where marks>75 order by right(name, 3), id asc;
+
+11.employee names
+select name from employee order by name;
+
+12.employee salaries
+select name from employee where salary >2000 and months <10 order by employee_id;
+
+13.average population
+select cast(avg(population) as int) from city;
+                ---------or------------
+select round(avg(population), 0) from city;
+
+14.weather observation station 6
+select distinct city from station where lower(substr(city,1,1)) in ('a','e','i','o','u');
+
+15.weather observation station 7
+select distinct city from station where lower(right(city,1)) in ('a','e','i','o','u');
+
+16.weather observation station 8
+select distinct city from station where lower(left(city,1)) in ('a','e','i','o','u') and lower(right(city,1)) in ('a','e','i','o','u');
+
+17.weather observation station 9
+select distinct city from station where lower(left(city,1)) not in ('a','e','i','o','u');
+
+18.weather observation station 10
+select distinct city from station where lower(right(city,1)) not in ('a','e','i','o','u');
+
+19.weather observation station 11
+select distinct city from station where lower(left(city,1)) not in ('a','e','i','o','u') or lower(right(city,1)) not in ('a','e','i','o','u');
+
+20.weather observation station 12
+select distinct city from station where lower(left(city,1)) not in ('a','e','i','o','u') and lower(right(city,1)) not in ('a','e','i','o','u');
+
+21.what type of triangle
+
+SELECT CASE             
+            WHEN A + B > C AND B + C > A AND A + C > B THEN
+                CASE 
+                    WHEN A = B AND B = C THEN 'Equilateral'
+                    WHEN A = B OR B = C OR A = C THEN 'Isosceles'
+                    ELSE 'Scalene'
+                END
+            ELSE 'Not A Triangle'
+        END
+FROM TRIANGLES;
+
+22.the pads
+SELECT Name || '(' || substr(Occupation,1,1) || ')' FROM OCCUPATIONS ORDER BY NAME ASC;
+SELECT 'There are a total of' || ' ' || count(Occupation) || ' ' || lower(Occupation) || 's.' FROM OCCUPATIONS GROUP BY OCCUPATION ORDER BY count(OCCUPATION) ASC;
+
+23.revising aggregations - the count function
+select count(DISTRICT) FROM CITY WHERE POPULATION > 100000;
+
+24.Revising Aggregations - The Sum Function
+select sum(Population) from City where District = 'California';
+
+25.Revising Aggregations - Averages
+select avg(Population) from city where district = 'California';
+
+26.japan population
+select sum(Population) from City where CountryCode = 'JPN';
+
+27.Population Density Difference
+select max(Population) - min(Population) from city;
+
+28.the blunder
+SELECT CAST(CEILING((AVG(CAST(Salary AS Float)) - AVG(CAST(REPLACE(Salary, 0, '')AS Float)))) AS INT)
+FROM EMPLOYEES;
+
+29.weather observation station 13
+select cast(sum(LAT_N) as dec(20,4)) from STATION where LAT_N > 38.7880 and LAT_N < 137.2345;
+
+30.weather observation station 14
+select cast(max(LAT_N) as dec(8,4)) from Station where LAT_N<137.2345;
+
+31.weather observation station 16
+SELECT cast (ROUND(MIN(Lat_N), 4) as decimal (10,4)) FROM Station WHERE Lat_N > 38.7780;
+
+32.weather observation station 17
+SELECT cast(ROUND(Long_W,4) as decimal(10,4)) FROM Station WHERE Lat_N > 38.7780 order by lat_N LIMIT 1;
+
+33.weather observation station 18 manhattan distance |x2 - x1| + |y2 -y1| for 2 points P1(x1,y1) and P2(x2,y2)
+select cast(round(abs(max(lat_n) - min(lat_n)) + abs(max(long_w) -min(long_w)),4) as decimal(10,4)) from station;
+
+34.weather observation station 2
+select cast(round(sum(Lat_n),2) as decimal(10,2)), cast(round(sum(Long_w),2) as decimal(10,2)) from station;
+
+35.weather observation station 15
+SELECT cast(ROUND(Long_W,4) as decimal(10,4)) FROM Station WHERE Lat_N < 137.2345 order by lat_N desc LIMIT 1;
+
+36.weather obseravtaion station 19 euclidean distance
+SELECT cast(ROUND(SQRT(POWER(MAX(LAT_N)  - MIN(LAT_N),  2) + POWER(MAX(LONG_W) - MIN(LONG_W), 2)), 4) as decimal(20,4)) FROM STATION;
+
+37.binary search tree 1
+SELECT CASE WHEN P IS NULL THEN CONCAT(N, ' Root') WHEN N IN (SELECT DISTINCT P FROM BST) THEN CONCAT(N, ' Inner') ELSE CONCAT(N, ' Leaf') END FROM BST ORDER BY N ASC;
+
+38.the company problem
+select c.company_code, c.founder, count(distinct l.lead_manager_code), count(distinct s.senior_manager_code), count(distinct m.manager_code), count(distinct e.employee_code) from Company as c, Lead_Manager as l, Senior_Manager as s, Manager as m, Employee as e where c.company_code = l.company_code and l.lead_manager_code=s.lead_manager_code and s.senior_manager_code=m.senior_manager_code and m.manager_code=e.manager_code group by c.company_code, c.founder order by c.company_code;
+
+39.draw the triangle 2 (Mysql)
+set @number = 0;
+select repeat('* ', @number := @number + 1) 
+from information_schema.tables
+limit 20;
+
+40.draw the triangle 1(Mysql)
+set @number = 21;
+select repeat('* ', @number := @number - 1) 
+from information_schema.tables
+limit 20;
+
+41.african cities (Mysql)
+select c.name from country as co, city as c where c.countrycode = co.code and co.continent = 'Africa';
+
+42.average poulation of each continent(Mysql)
+select co.continent, floor(avg(c.population)) from country as co, city as c where c.countrycode = co.code and c.name is not null group by co.continent;
+
+43.asian population(Mysql)
+select sum(c.population) from country as co, city as c where c.countrycode = co.code and co.continent = 'Asia' ;
+
+44.weather observation station 5
+select city, length(city) from station order by length(city),city asc limit 1;
+select city, length(city) from station order by length(city) desc limit 1;
+
+45.earnings of emoloyees problem
+select case months*salary when max(months*salary) then max(months*salary) || ' ' || count(months*salary) end from Employee group by months*salary order by months*salary desc limit 1;
+
